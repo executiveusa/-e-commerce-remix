@@ -1,59 +1,45 @@
 import CartModal from 'components/cart/modal';
-import LogoSquare from 'components/logo-square';
-import { getMenu } from 'lib/shopify';
-import { Menu } from 'lib/shopify/types';
+import { LanguageToggle } from 'components/tecito/language-toggle';
 import Link from 'next/link';
-import { Suspense } from 'react';
-import MobileMenu from './mobile-menu';
-import Search, { SearchSkeleton } from './search';
 
-const { SITE_NAME } = process.env;
+const links = [
+  { href: '#ritual', label: 'Ritual' },
+  { href: '#colecciones', label: 'Colecciones' },
+  { href: '#hoteles', label: 'Hoteles' }
+];
 
 export async function Navbar() {
-  const menu = await getMenu('next-js-frontend-header-menu');
-
   return (
-    <nav className="relative flex items-center justify-between p-4 lg:px-6">
-      <div className="block flex-none md:hidden">
-        <Suspense fallback={null}>
-          <MobileMenu menu={menu} />
-        </Suspense>
-      </div>
-      <div className="flex w-full items-center">
-        <div className="flex w-full md:w-1/3">
-          <Link
-            href="/"
-            prefetch={true}
-            className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
-          >
-            <LogoSquare />
-            <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
-              {SITE_NAME}
-            </div>
-          </Link>
-          {menu.length ? (
-            <ul className="hidden gap-6 text-sm md:flex md:items-center">
-              {menu.map((item: Menu) => (
-                <li key={item.title}>
-                  <Link
-                    href={item.path}
-                    prefetch={true}
-                    className="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
-                  >
-                    {item.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+    <nav className="absolute inset-x-0 top-0 z-50 text-[var(--tecito-cantera)]">
+      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-6 px-5 py-5 sm:px-8 lg:px-12 lg:py-7">
+        <Link
+          href="/"
+          prefetch={true}
+          className="tecito-display max-w-[12rem] text-[13px] font-semibold uppercase leading-tight tracking-[0.16em] sm:max-w-none sm:text-sm"
+          aria-label="Tecito de La Verdad — Inicio"
+        >
+          Tecito de La Verdad
+        </Link>
+
+        <div className="hidden items-center gap-8 lg:flex">
+          {links.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/75 transition-colors hover:text-white"
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
-        <div className="hidden justify-center md:flex md:w-1/3">
-          <Suspense fallback={<SearchSkeleton />}>
-            <Search />
-          </Suspense>
-        </div>
-        <div className="flex justify-end md:w-1/3">
-          <CartModal />
+
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="hidden lg:block">
+            <LanguageToggle className="text-[var(--tecito-cantera)]" />
+          </div>
+          <div className="rounded-full border border-white/20 bg-black/10 backdrop-blur-md">
+            <CartModal />
+          </div>
         </div>
       </div>
     </nav>
