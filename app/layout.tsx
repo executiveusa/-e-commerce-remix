@@ -1,6 +1,5 @@
 import { CartProvider } from 'components/cart/cart-context';
 import { Navbar } from 'components/layout/navbar';
-import { WelcomeToast } from 'components/welcome-toast';
 import { GeistSans } from 'geist/font/sans';
 import { getCart } from 'lib/shopify';
 import { ReactNode } from 'react';
@@ -13,9 +12,11 @@ const { SITE_NAME } = process.env;
 export const metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: SITE_NAME!,
-    template: `%s | ${SITE_NAME}`
+    default: SITE_NAME || 'Tecito de La Verdad',
+    template: `%s | ${SITE_NAME || 'Tecito de La Verdad'}`
   },
+  description:
+    'Tecito de La Verdad — té, ritual y palabras para encontrar tu verdad.',
   robots: {
     follow: true,
     index: true
@@ -27,18 +28,16 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  // Don't await the fetch, pass the Promise to the context provider
   const cart = getCart();
 
   return (
-    <html lang="en" className={GeistSans.variable}>
-      <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
+    <html lang="es">
+      <body className={`${GeistSans.variable} bg-[var(--tecito-cantera)] text-[var(--tecito-obsidiana)] antialiased`}>
         <CartProvider cartPromise={cart}>
           <Navbar />
           <main>
             {children}
             <Toaster closeButton />
-            <WelcomeToast />
           </main>
         </CartProvider>
       </body>
