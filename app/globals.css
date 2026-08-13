@@ -22,14 +22,74 @@
   }
 
   html {
+    scroll-behavior: smooth;
     background: var(--tecito-cantera);
     color: var(--tecito-obsidiana);
   }
 
   body {
     min-height: 100vh;
+    overflow-x: hidden;
     background: var(--tecito-cantera);
     color: var(--tecito-obsidiana);
+  }
+}
+
+.tecito-display {
+  font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Baskerville,
+    'Times New Roman', serif;
+}
+
+.tecito-hero-image {
+  transform: scale(1.035);
+  animation: tecito-camera-drift 18s ease-out both;
+  will-change: transform;
+}
+
+.tecito-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: tecito-reveal 900ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.tecito-reveal:nth-of-type(2) {
+  animation-delay: 120ms;
+}
+
+.tecito-reveal:nth-of-type(3) {
+  animation-delay: 220ms;
+}
+
+.tecito-reveal:nth-of-type(4) {
+  animation-delay: 320ms;
+}
+
+@keyframes tecito-camera-drift {
+  from {
+    transform: scale(1.035) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.09) translate3d(-0.5%, -0.35%, 0);
+  }
+}
+
+@keyframes tecito-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .tecito-hero-image,
+  .tecito-reveal {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
 }
 
