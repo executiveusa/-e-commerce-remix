@@ -3,6 +3,15 @@
 @plugin "@tailwindcss/container-queries";
 @plugin "@tailwindcss/typography";
 
+:root {
+  --tecito-obsidiana: #1a1a1a;
+  --tecito-cantera: #f5efe6;
+  --tecito-copal: #c96f4a;
+  --tecito-oro-viejo: #b8954a;
+  --tecito-barro: #8b6f5c;
+  --tecito-nopal: #4a6741;
+}
+
 @layer base {
   *,
   ::after,
@@ -11,11 +20,16 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
-}
 
-@media (prefers-color-scheme: dark) {
   html {
-    color-scheme: dark;
+    background: var(--tecito-cantera);
+    color: var(--tecito-obsidiana);
+  }
+
+  body {
+    min-height: 100vh;
+    background: var(--tecito-cantera);
+    color: var(--tecito-obsidiana);
   }
 }
 
@@ -28,5 +42,12 @@
 a,
 input,
 button {
-  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-50 dark:focus-visible:ring-neutral-600 dark:focus-visible:ring-offset-neutral-900;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  --tw-ring-color: var(--tecito-copal);
+  --tw-ring-offset-color: var(--tecito-cantera);
+}
+
+::selection {
+  background: var(--tecito-copal);
+  color: var(--tecito-cantera);
 }
